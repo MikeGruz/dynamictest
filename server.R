@@ -3,19 +3,22 @@ source('mediantest.R')
 source('mintest.R')
 source('maxtest.R')
 source('multchoice.R')
+source('ttest.R')
 
 shinyServer(function(input, output) {
 
     observeEvent(input$nextProb, {
 
       # sample from available types
-      pset = sample(c("mean","median","min","max","multi"), size=1, replace=T)
+      pset = sample(c("mean","median","min",
+                      "max","multichoice","ttest"), size=1, replace=T)
       problem = switch(pset,
         "mean" = meanTest(),
         "median" = medianTest(),
         "min" = minTest(),
         "max" = maxTest(),
-        "multi" = multTest()
+        "multichoice" = multTest(),
+        "ttest" = tTest()
         )
 
       output$problemText = renderUI(p(problem$text))
@@ -24,9 +27,10 @@ shinyServer(function(input, output) {
         switch(problem$input,
           "numeric" = numericInput("answer", "Answer", value=""),
           "text" = textInput("answer", "Answer", value=""),
-          "multi" = radioButtons("answer", "Answer",
+          "multichoice" = radioButtons("answer", "Answer",
                 choices = problem$choices,
-                selected = "")
+                selected = ""),
+          ""
           )
       )
 
@@ -41,6 +45,7 @@ shinyServer(function(input, output) {
           } else {
             p("Incorrect")
           }
+
         })
         })
 
