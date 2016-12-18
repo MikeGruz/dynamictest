@@ -1,6 +1,7 @@
 source('meantest.R')
 source('mediantest.R')
 source('mintest.R')
+source('maxtest.R')
 source('multchoice.R')
 
 shinyServer(function(input, output) {
@@ -8,11 +9,12 @@ shinyServer(function(input, output) {
     observeEvent(input$nextProb, {
 
       # sample from available types
-      pset = sample(c("mean","median","min","multi"), size=1, replace=T)
+      pset = sample(c("mean","median","min","max","multi"), size=1, replace=T)
       problem = switch(pset,
         "mean" = meanTest(),
         "median" = medianTest(),
         "min" = minTest(),
+        "max" = maxTest(),
         "multi" = multTest()
         )
 
