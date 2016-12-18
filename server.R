@@ -1,17 +1,19 @@
 source('meantest.R')
 source('mediantest.R')
 source('mintest.R')
+source('multchoice.R')
 
 shinyServer(function(input, output) {
 
     observeEvent(input$nextProb, {
 
       # sample from available types
-      pset = sample(c("mean","median","min"), size=1, replace=T)
+      pset = sample(c("mean","median","min","multi"), size=1, replace=T)
       problem = switch(pset,
         "mean" = meanTest(),
         "median" = medianTest(),
-        "min" = minTest()
+        "min" = minTest(),
+        "multi" = multTest()
         )
 
       output$problemText = renderUI(p(problem$text))
@@ -19,7 +21,11 @@ shinyServer(function(input, output) {
       output$answer = renderUI(
         switch(problem$input,
           "numeric" = numericInput("answer", "Answer", value=""),
-          "text" = textInput("answer", "Answer", value=""))
+          "text" = textInput("answer", "Answer", value=""),
+          "multi" = radioButtons("answer", "Answer",
+                choices = problem$choices,
+                selected = "")
+          )
       )
 
       # when submit clicked, check answer
@@ -38,24 +44,5 @@ shinyServer(function(input, output) {
 
       })
 
-    # # clear the space
-    # output$check = renderUI({
-    #   br()
-    #   })
-    #
-    # # wait for next button click
-    # observeEvent(input$nextProb, {
-    #
-    #   # clear answer
-    #   output$check = renderUI({
-    #     br("")
-    #     })
-    #
-    #   test = sample(c("mean"), size=1, replace=T)
-    #
-    #   switch(test,
-    #          "mean" = meanTest(input, output),
-    #          "median" = medianTest(input, output)
-    #          )
-    #   })
+
 })

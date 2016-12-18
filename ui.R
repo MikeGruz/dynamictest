@@ -10,8 +10,6 @@ shinyUI(fluidPage(
       uiOutput("answer"),
       uiOutput("check"),
 
-      # testing
-
       actionButton("submit", "Submit"),
       actionButton("nextProb", "Next Problem")
 
