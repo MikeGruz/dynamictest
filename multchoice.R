@@ -9,7 +9,7 @@ multTest = function(){
     "problem" = probMath,
     "problemDisp" = probMathDisp,
     "solution" = probSolution,
-    "input" = "multi",
+    "input" = "multichoice",
     "choices" = probChoices
     ))
 }
