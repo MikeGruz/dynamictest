@@ -1,9 +1,9 @@
-source('meantest.R')
-source('mediantest.R')
-source('mintest.R')
-source('maxtest.R')
-source('multchoice.R')
-source('ttest.R')
+source('tests/meantest.R')
+source('tests/mediantest.R')
+source('tests/mintest.R')
+source('tests/maxtest.R')
+source('tests/multchoice.R')
+source('tests/ttest.R')
 
 shinyServer(function(input, output) {
 
