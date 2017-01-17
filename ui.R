@@ -8,10 +8,12 @@ shinyUI(fluidPage(
       uiOutput("problemText"),
       uiOutput("problem"),
       uiOutput("answer"),
-      uiOutput("check"),
 
+      uiOutput("placeholder"),
       actionButton("submit", "Submit"),
-      actionButton("nextProb", "Next Problem")
+      actionButton("nextProb", "Next Problem"),
+      
+      uiOutput("check")
 
     ),
     column(2)
