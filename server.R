@@ -1,22 +1,34 @@
-# source all functions in test folder
-source("tests/regress.R")
-source("tests/ttest.R")
+# set wd
+setwd("~/Academic/Programming/Shiny/dynamicTest/tests/")
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+  
+  # set up reactive container for method list
+  methodList <- reactiveValues()
+  
+  # pull testing parameters
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    if (!is.null(query[['method']])) {
+
+      # parse uri for methods
+      methodList$methods <- strsplit(unlist(query), split=",")
+      
+      # source the methods
+      sapply(
+        sapply(methodList$methods, function(x){
+          paste(x, '.R', sep='')
+        }), source
+      )
+      
+    }
+  })
   
   genProblem <- function() {
-    pset <-  sample(c("reg"), size=1, replace=T)
-    problem <-  switch(pset,
-                       "mean" = meanTest(),
-                       "median" = medianTest(),
-                       "min" = minTest(),
-                       "max" = maxTest(),
-                       "multichoice" = multTest(),
-                       "ttest" = tTest(),
-                       "reg" = regTest()
-    )
+    # sample from URI methods
+    problem <- do.call(sample(unlist(methodList$methods), 1), args=list())
+
     return(problem)
-      
   }
   
   # container for reactive problem set
@@ -56,9 +68,9 @@ shinyServer(function(input, output) {
     
     output$check <- renderUI({
       if (input$answer == solution) {
-        p("Correct")
+        h3(style="color:green;", "Correct")
       } else {
-        p("Incorrect")
+        p(style="color:red;", "Incorrect")
       }
     })
 
