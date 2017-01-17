@@ -1,4 +1,4 @@
-tTest = function(){
+ttest = function(){
 
   # generate random t-values, degrees of freedom, and pull prob
   tval = round(runif(1, -4, 4))

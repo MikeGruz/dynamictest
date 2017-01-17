@@ -1,4 +1,4 @@
-multTest = function(){
+multchoice = function(){
   probText = "What is the median of the following set?"
   probMath = round(rnorm(7, sample(0:5, 1), 1))
   probMathDisp = paste(probMath, collapse=" ")

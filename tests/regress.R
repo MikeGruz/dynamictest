@@ -1,4 +1,4 @@
-regTest = function(){
+regress = function(){
 
   # generate regression
   x = runif(100, -1, 1)
