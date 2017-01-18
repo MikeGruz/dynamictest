@@ -7,11 +7,12 @@ ttest = function(){
 
   # text for the problem
   probText = "Would you reject or fail to reject the null hypothesis of the following test?"
-  probMath = paste(c("t =", tval, "df =", df, "p =", tprob), collapse=" ")
+  probMath = wellPanel(paste(c("t =", tval, "df =", df, "p =", tprob), collapse=" "))
 
   # solution space
   probMathDisp = probMath
-  probSolution = ifelse(tprob < .05, "Reject the null hypothesis","Fail to reject the null hypothesis")
+  probSolution = ifelse(tprob < .05, "Reject the null hypothesis",
+                        "Fail to reject the null hypothesis")
   probChoices = c("Reject the null hypothesis","Fail to reject the null hypothesis")
 
   # return the following

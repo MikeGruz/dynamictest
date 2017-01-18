@@ -13,7 +13,7 @@ regress = function(){
 
   summary.fit[,4] <- round(summary.fit[,4], digits=5)
   # text for the problem
-  probText = "Interpret the slope coefficient of x"
+  probText = "Interpret the <strong>slope coefficient of x.</strong>"
   probMathDisp = renderPrint(summary.fit)
 
   # solution space - accounting for significance and directionality
