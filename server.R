@@ -1,4 +1,4 @@
-# set wd
+# to use: connect to Shiny Server with base url + '/?method=[method],[method],[method]' etc
 
 shinyServer(function(input, output, session) {
 
