@@ -1,5 +1,11 @@
 # dynamictest
 
+Must have the `Shiny` package installed in R.  
+
+```
+shiny::runGitHub('dynamictest','MikeGruz')
+```
+
 This package is a first stab at creating an adaptive practice environment for students in introductory statistics (or math) classes, using the *R* package *Shiny*.
 
 This is very much a rudimentary first crack at the moment, but long-term plans for this include:
