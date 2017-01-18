@@ -32,12 +32,27 @@ regress = function(){
      "There is no significant effect of x on y."
     )
 
+  feedback =
+    # feedback for pos. and significant coef
+    ifelse(pval < .05 & x.coef > 0,
+      sprintf("If the <i>p-value</i> is less than .05 and the coefficient of <i>x</i> is positive,
+              we can interpret <i>x</i> as having a positive impact on <i>y</i>. In this case,
+              each 1-unit increase in <i>x</i> leads to a %s increase in <i>y</i>.", abs(x.coef)),
+      # feedback for neg. and significant coef
+      ifelse(pval < .05 & x.coef < 0,
+      sprintf("If the <i>p-value</i> is less than .05 and the coefficient of <i>x</i> is negative,
+              we can interpret <i>x</i> as having a negative impact on <i>y</i>. In this case,
+              each 1-unit increase in <i>x</i> leads to a %s decrease in <i>y</i>.", abs(x.coef)),
+      # feedback for non-sig coefficient
+      ifelse(pval > .05, "If the <i>p-value</i> is greater than or equal to .05, <i>x</i> has no systematic impact on <i>y</i>.", "")))
+
   # return the following
   return(list(
     "text" = probText,
     "problemDisp" = probMathDisp,
     "solution" = probSolution,
     "input" = "multichoice",
-    "choices" = probchoices
+    "choices" = probchoices,
+    "feedback" = feedback
     ))
 }
