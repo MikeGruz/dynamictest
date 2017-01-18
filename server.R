@@ -2,7 +2,7 @@
 
 shinyServer(function(input, output, session) {
 
-  # set up reactive container for method list
+  # set up reactive container for URI parameters
   paramList <- reactiveValues()
 
   # pull testing parameters
@@ -24,16 +24,16 @@ shinyServer(function(input, output, session) {
       # source the methods
       sapply(
         sapply(paramList$methods, function(x){
-          paste("tests/", paste(x, '.R', sep=''), sep='')
+          paste("methods/", paste(x, '.R', sep=''), sep='')
         }), source
       )
 
     } else {
       # if no method listed, source all methods in methods folder
-      allMethods <- list.files("tests/", pattern="*\\.R")
+      allMethods <- list.files("methods/", pattern="*\\.R")
       sapply(
         sapply(allMethods, function(x) {
-          paste("tests/", x, sep="")
+          paste("methods/", x, sep="")
         }), source
       )
 
