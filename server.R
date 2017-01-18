@@ -1,11 +1,10 @@
 # set wd
-setwd("~/Academic/Programming/Shiny/dynamicTest/tests/")
 
 shinyServer(function(input, output, session) {
-  
+
   # set up reactive container for method list
   methodList <- reactiveValues()
-  
+
   # pull testing parameters
   observe({
     query <- parseQueryString(session$clientData$url_search)
@@ -13,33 +12,33 @@ shinyServer(function(input, output, session) {
 
       # parse uri for methods
       methodList$methods <- strsplit(unlist(query), split=",")
-      
+
       # source the methods
       sapply(
         sapply(methodList$methods, function(x){
-          paste(x, '.R', sep='')
+          paste("tests/", paste(x, '.R', sep=''), sep='')
         }), source
       )
-      
+
     }
   })
-  
+
   genProblem <- function() {
     # sample from URI methods
     problem <- do.call(sample(unlist(methodList$methods), 1), args=list())
 
     return(problem)
   }
-  
+
   # container for reactive problem set
   prob <- reactiveValues()
-    
+
   # reset problem space on "next problem" click
   observeEvent(input$nextProb, {
-    
+
     # get problem set
     prob$problem <- genProblem()
-    
+
     # output problem to UI
     output$problemText <-  renderUI(p(prob$problem$text))
     output$problem <-  renderUI(p(prob$problem$problemDisp))
@@ -52,20 +51,20 @@ shinyServer(function(input, output, session) {
                                           selected = character(0))
       )
     )
-    
+
     # remove correct/incorrect text
     output$check <- renderUI({
       p(" ")
     })
-    
+
   }, ignoreNULL = TRUE)
-  
+
   # when submit clicked, check answer
   observeEvent(input$submit, {
 
     # isolate solution from reactive
     solution <- isolate(prob$problem$solution)
-    
+
     output$check <- renderUI({
       if (input$answer == solution) {
         h3(style="color:green;", "Correct")
@@ -75,16 +74,16 @@ shinyServer(function(input, output, session) {
     })
 
   })
-  
-    
+
+
 })
-      
-    
 
-      
-    
-      
-        
-      
 
-  
+
+
+
+
+
+
+
+
