@@ -20,6 +20,17 @@ shinyServer(function(input, output, session) {
         }), source
       )
 
+    } else {
+      # source all methods in methods folder
+      allMethods <- list.files("tests/", pattern="*\\.R")
+      sapply(
+        sapply(allMethods, function(x) {
+          paste("tests/", x, sep="")
+        }), source
+      )
+
+      # remove file extension from filelist names
+      methodList$methods <- sapply(allMethods, function(x) {sub(".R", "", x)})
     }
   })
 
@@ -47,6 +58,7 @@ shinyServer(function(input, output, session) {
              "numeric" = numericInput("answer", "Answer", value=""),
              "text" = textInput("answer", "Answer", value=""),
              "multichoice" = radioButtons("answer", "Answer",
+                                          width = "100%",
                                           choices = prob$problem$choices,
                                           selected = character(0))
       )
