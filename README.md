@@ -9,7 +9,7 @@ shiny::runGitHub('dynamictest','MikeGruz')
 Construct a url with the methods listed in a URI, as such (method names must match method names in the `/tests` folder):
 
 ```
-http://localhost:5213/?method=regress,ttest
+http://{base url of app}/?method=regress,ttest
 ```
 
 This package is a first stab at creating an adaptive practice environment for students in introductory statistics (or math) classes, using the *R* package *Shiny*.
