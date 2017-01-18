@@ -13,7 +13,6 @@ shinyServer(function(input, output, session) {
     # check for id in query string
     if (!is.null(query[['id']])) {
       paramList$id <- query$id
-      output$check <- renderUI(p(paramList$id))
     }
 
     # check for methods parameters in query string
