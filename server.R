@@ -73,7 +73,7 @@ shinyServer(function(input, output, session) {
     )
 
     # remove correct/incorrect text
-    output$check <- renderUI({
+    output$feedback <- renderUI({
       p(" ")
     })
 
@@ -85,18 +85,34 @@ shinyServer(function(input, output, session) {
     # isolate solution from reactive
     solution <- isolate(prob$problem$solution)
 
-    output$check <- renderUI({
-      if (input$answer == solution) {
-        h3(style="color:green;", "Correct")
+    output$feedback <- renderUI({
+      # give feedback for right answer if available
+      if (input$answer == solution & !is.null(prob$problem$feedback)) {
+        tagList(
+          h4("Correct"),
+          HTML(prob$problem$feedback)
+        )
+      } else if (input$answer == solution) {
+        h4("Correct")
+
+      # give feedback for wrong answer if available
+      } else if (input$answer != solution & !is.null(prob$problem$feedback)) {
+        tagList(
+          h4("Incorrect"),
+          HTML(prob$problem$feedback)
+          )
       } else {
-        p(style="color:red;", "Incorrect")
+        h4("Incorrect")
       }
+    })
+
+
     })
 
   })
 
 
-})
+
 
 
 

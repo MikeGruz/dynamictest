@@ -13,9 +13,9 @@ shinyUI(fluidPage(
       uiOutput("placeholder"),
       actionButton("submit", "Submit"),
       actionButton("nextProb", "Next Problem"),
-      
+
       div(style="height:20px;"),
-      uiOutput("check")
+      uiOutput("feedback")
 
     ),
     column(2)
