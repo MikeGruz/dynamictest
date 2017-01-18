@@ -3,25 +3,34 @@
 shinyServer(function(input, output, session) {
 
   # set up reactive container for method list
-  methodList <- reactiveValues()
+  paramList <- reactiveValues()
 
   # pull testing parameters
   observe({
+    # get query string
     query <- parseQueryString(session$clientData$url_search)
+
+    # check for id in query string
+    if (!is.null(query[['id']])) {
+      paramList$id <- query$id
+      output$check <- renderUI(p(paramList$id))
+    }
+
+    # check for methods parameters in query string
     if (!is.null(query[['method']])) {
 
       # parse uri for methods
-      methodList$methods <- strsplit(unlist(query), split=",")
+      paramList$methods <- strsplit(unlist(query$method), split=",")
 
       # source the methods
       sapply(
-        sapply(methodList$methods, function(x){
+        sapply(paramList$methods, function(x){
           paste("tests/", paste(x, '.R', sep=''), sep='')
         }), source
       )
 
     } else {
-      # source all methods in methods folder
+      # if no method listed, source all methods in methods folder
       allMethods <- list.files("tests/", pattern="*\\.R")
       sapply(
         sapply(allMethods, function(x) {
@@ -30,13 +39,13 @@ shinyServer(function(input, output, session) {
       )
 
       # remove file extension from filelist names
-      methodList$methods <- sapply(allMethods, function(x) {sub(".R", "", x)})
+      paramList$methods <- sapply(allMethods, function(x) {sub(".R", "", x)})
     }
   })
 
   genProblem <- function() {
     # sample from URI methods
-    problem <- do.call(sample(unlist(methodList$methods), 1), args=list())
+    problem <- do.call(sample(unlist(paramList$methods), 1), args=list())
 
     return(problem)
   }
