@@ -86,23 +86,28 @@ shinyServer(function(input, output, session) {
     solution <- isolate(prob$problem$solution)
 
     output$feedback <- renderUI({
-      # give feedback for right answer if available
-      if (input$answer == solution & !is.null(prob$problem$feedback)) {
-        tagList(
-          h4("Correct"),
-          HTML(prob$problem$feedback)
-        )
-      } else if (input$answer == solution) {
-        h4("Correct")
-
-      # give feedback for wrong answer if available
-      } else if (input$answer != solution & !is.null(prob$problem$feedback)) {
-        tagList(
-          h4("Incorrect"),
-          HTML(prob$problem$feedback)
+      # correct answer
+      if (input$answer == solution) {
+        # give feedback if available
+        if (!is.null(prob$problem$feedback)) {
+          tagList(
+            h4("Correct"),
+            HTML(prob$problem$feedback)
           )
+        } else {
+          h4("Correct")
+        }
+      # wrong answer
       } else {
-        h4("Incorrect")
+        # give feedback if available
+        if (!is.null(prob$problem$feedback)) {
+          tagList(
+            h4("Incorrect"),
+            HTML(prob$problem$feedback)
+          )
+        } else {
+          h4("Incorrect")
+        }
       }
     })
 
