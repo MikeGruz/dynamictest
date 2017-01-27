@@ -1,8 +1,8 @@
 # to use: connect to Shiny Server with base url + '/?method=[method],[method],[method]' etc
 
 # source database connection files
-source("load_db.R")
-source("write_db.R")
+source("db/load_db.R")
+source("db/write_db.R")
 
 shinyServer(function(input, output, session) {
 
@@ -122,9 +122,9 @@ shinyServer(function(input, output, session) {
     
     # save the result - change to db solution later
     if (input$answer == solution) {
-      writeTest(db=db, id=paramList$id, result=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+      writeTest(db=db, id=paramList$id, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
     } else {
-      writeTest(db=db, id=paramList$id, result=0, method=prob$problem$method, answer=input$answer, solution=solution)
+      writeTest(db=db, id=paramList$id, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
     }
 
 
