@@ -37,6 +37,7 @@ regress_intercept = function(){
 
   # return the following
   return(list(
+    "method" = "Regression Intercept Interpretation",
     "text" = probText,
     "problemDisp" = probMathDisp,
     "solution" = probSolution,

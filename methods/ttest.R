@@ -24,6 +24,7 @@ ttest = function(){
 
   # return the following
   return(list(
+    "method" = "Basic t-test interpretation",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,
