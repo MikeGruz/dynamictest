@@ -48,6 +48,7 @@ regress = function(){
 
   # return the following
   return(list(
+    "method" = "Bivariate Regression",
     "text" = probText,
     "problemDisp" = probMathDisp,
     "solution" = probSolution,
