@@ -1,5 +1,9 @@
 # to use: connect to Shiny Server with base url + '/?method=[method],[method],[method]' etc
 
+# source database connection files
+source("load_db.R")
+source("write_db.R")
+
 shinyServer(function(input, output, session) {
 
   # set up reactive container for URI parameters
@@ -13,6 +17,9 @@ shinyServer(function(input, output, session) {
     # check for id in query string
     if (!is.null(query[['id']])) {
       paramList$id <- query$id
+    } else {
+      # null ID number if not present in URI
+      paramList$id <- -99
     }
 
     # check for methods parameters in query string
@@ -97,6 +104,7 @@ shinyServer(function(input, output, session) {
         } else {
           h4("Correct")
         }
+
       # wrong answer
       } else {
         # give feedback if available
@@ -108,8 +116,16 @@ shinyServer(function(input, output, session) {
         } else {
           h4("Incorrect")
         }
+
       }
     })
+    
+    # save the result - change to db solution later
+    if (input$answer == solution) {
+      writeTest(db=db, id=paramList$id, result=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+    } else {
+      writeTest(db=db, id=paramList$id, result=0, method=prob$problem$method, answer=input$answer, solution=solution)
+    }
 
 
     })
