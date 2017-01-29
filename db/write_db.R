@@ -1,7 +1,8 @@
 # function to write test results to file
-writeTest <- function(db, id, correct, method, answer, solution) {
+
+writeTest <- function(db, user_id, correct, method, answer, solution) {
   outTable <- data.frame(
-    id = id,
+    user_id = user_id,
     date = Sys.time(),
     correct = correct,
     method = method,

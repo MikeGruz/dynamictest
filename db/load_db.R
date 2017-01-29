@@ -9,12 +9,13 @@ db = dbConnect(SQLite(), dbname="results.sqlite")
 if (dbExecute(db, "SELECT name FROM sqlite_master WHERE type='table' AND name='results'") == 1) {
   dbSendQuery(db,
               "CREATE TABLE results
-              (date INT,
-              id TEXT,
-              correct INT,
+              (id INTEGER PRIMARY KEY, -- Autoincrement
+              user_id TEXT,
+              date INTEGER,
+              correct INTEGER,
               method TEXT,
               answer TEXT,
-              solution TEXT")
+              solution TEXT)")
 }
 
 # loading posix time
