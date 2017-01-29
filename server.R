@@ -1,4 +1,5 @@
 # to use: connect to Shiny Server with base url + '/?method=[method],[method],[method]' etc
+require(shinyjs)
 
 # source database connection files
 source("db/load_db.R")
@@ -61,7 +62,13 @@ shinyServer(function(input, output, session) {
 
   # reset problem space on "next problem" click
   observeEvent(input$nextProb, {
-
+    
+    # enable submit button
+    shinyjs::enable("submit")
+    
+    # enable answer input
+    shinyjs::enable("answer")
+    
     # get problem set
     prob$problem <- genProblem()
 
@@ -89,6 +96,12 @@ shinyServer(function(input, output, session) {
   # when submit clicked, check answer
   observeEvent(input$submit, {
 
+    # disable submit button
+    shinyjs::disable("submit")
+    
+    # disable input
+    shinyjs::disable("answer")
+    
     # isolate solution from reactive
     solution <- isolate(prob$problem$solution)
 
@@ -122,25 +135,13 @@ shinyServer(function(input, output, session) {
     
     # save the result - change to db solution later
     if (input$answer == solution) {
-      writeTest(db=db, id=paramList$id, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+      writeTest(db=db, user_id=paramList$id, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
     } else {
-      writeTest(db=db, id=paramList$id, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
+      writeTest(db=db, user_id=paramList$id, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
     }
 
 
     })
 
   })
-
-
-
-
-
-
-
-
-
-
-
-
 
