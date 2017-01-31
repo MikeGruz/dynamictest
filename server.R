@@ -63,10 +63,8 @@ shinyServer(function(input, output, session) {
   # reset problem space on "next problem" click
   observeEvent(input$nextProb, {
     
-    # enable submit button
+    # enable submit button and answer input
     shinyjs::enable("submit")
-    
-    # enable answer input
     shinyjs::enable("answer")
     
     # get problem set
@@ -96,10 +94,8 @@ shinyServer(function(input, output, session) {
   # when submit clicked, check answer
   observeEvent(input$submit, {
 
-    # disable submit button
+    # disable submit button and answer input
     shinyjs::disable("submit")
-    
-    # disable input
     shinyjs::disable("answer")
     
     # isolate solution from reactive
