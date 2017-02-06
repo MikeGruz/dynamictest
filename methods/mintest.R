@@ -4,6 +4,7 @@ mintest = function(){
   probMathDisp = paste(probMath, collapse=" ")
   probSolution = min(probMath)
   return(list(
+    "method" = "find minimum",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,

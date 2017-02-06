@@ -4,6 +4,7 @@ mediantest = function(){
   probMathDisp = paste(probMath, collapse=" ")
   probSolution = median(probMath)
   return(list(
+    "method" = "compute median",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,

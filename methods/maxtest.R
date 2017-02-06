@@ -4,6 +4,7 @@ maxtest = function(){
   probMathDisp = paste(probMath, collapse=" ")
   probSolution = max(probMath)
   return(list(
+    "method" = "find maximum",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,

@@ -4,6 +4,7 @@ meantest = function(){
   probMathDisp = paste(probMath, collapse=" ")
   probSolution = mean(probMath)
   return(list(
+    "method" = "compute mean",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,

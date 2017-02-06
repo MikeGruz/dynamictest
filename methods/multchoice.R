@@ -5,6 +5,7 @@ multchoice = function(){
   probSolution = median(probMath)
   probChoices = c(probSolution, unique(probMath[!(probMath %in% probSolution)]))
   return(list(
+    "method" = "multi-select median",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,
