@@ -3,7 +3,7 @@ require(RSQLite)
 require(DBI)
 
 # instantiate db
-db = dbConnect(SQLite(), dbname="results.sqlite")
+db = dbConnect(SQLite(), dbname="data/results.sqlite")
 
 # create table if it doesn't exist
 if (dbExecute(db, "SELECT name FROM sqlite_master WHERE type='table' AND name='results'") == 1) {

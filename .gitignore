@@ -1,2 +1,4 @@
 .Rhistory
 .gitignore
+.Rproj.user
+.sqlite
