@@ -1,7 +1,7 @@
 ttest.p = function(){
 
   # generate random t-values, degrees of freedom, and pull prob
-  tval = round(runif(1, -4, 4))
+  tval = round(runif(1, -4, 4), 2)
   df = sample(c(10,30,60,120,1000), size=1, replace=T)
   tprob = round(ifelse(tval < 0, pt(tval, df), pt(tval, df, lower.tail=F)), digits=3)
 
