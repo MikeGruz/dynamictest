@@ -46,7 +46,7 @@ shinyServer(function(input, output, session) {
         # add UIs for id input
         insertUI(selector="#idDiv",
                  where="beforeEnd",
-                 ui=p(id="idText", "Please enter your ID"))
+                 ui=p(id="idText", "Please enter your APSU email address:"))
         insertUI(selector="#idDiv",
                  where="beforeEnd",
                  ui=textInput("id", "", ""))
