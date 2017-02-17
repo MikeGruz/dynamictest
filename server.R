@@ -5,22 +5,88 @@ require(shinyjs)
 source("db/load_db.R")
 source("db/write_db.R")
 
+# progressUpdate <- function(value=0, init=FALSE) {
+#   if (init) {
+#     return(
+#       div("0/10", style="height:30px;width:1px;background-color:#6fa5fc;")
+#     )
+#   } else {
+#     return(
+#       div(sprintf("%d/10", value), 
+#           style=sprintf("height:30px;width:%s%s;background-color:#6fa5fc;", value*10, "%"))
+#     )
+#   }
+# }
+
+
 shinyServer(function(input, output, session) {
 
+
+  
+  # instantiate progress bar
+  # output$progressBar <- renderUI(progressUpdate(init=TRUE))
+  
   # set up reactive container for URI parameters
   paramList <- reactiveValues()
+  
+  # setup iteration counter
+  # paramList$iter <- 0
 
   # pull testing parameters
   observe({
     # get query string
     query <- parseQueryString(session$clientData$url_search)
 
-    # check for id in query string
+    # check for id boolean in query string
     if (!is.null(query[['id']])) {
-      paramList$id <- query$id
+      
+      # if id is true, create id login
+      if (query$id == "True") {
+        
+        # add UIs for id input
+        insertUI(selector="#idDiv",
+                 where="beforeEnd",
+                 ui=p(id="idText", "Please enter your ID"))
+        insertUI(selector="#idDiv",
+                 where="beforeEnd",
+                 ui=textInput("id", "", ""))
+        insertUI(selector="#idDiv",
+                 where="beforeEnd",
+                 ui=actionButton("idSubmit", "Submit"))
+        
+        # get id on submit
+        observeEvent(input$idSubmit, {
+          paramList$id <- input$id
+          
+          # remove ID div
+          removeUI(selector="#idDiv")
+          
+          # instantiate submit and nextProb buttons
+          insertUI(selector="#placeholder",
+                   where="afterEnd",
+                   ui=actionButton("submit", "Submit"))
+          insertUI(selector="#submit",
+                   where="afterEnd",
+                   ui=actionButton("nextProb", "Next Problem"))
+          
+        })
+        
+        
+      } else {
+        # null id if not true
+        paramList$id <- NULL
+      }
     } else {
-      # null ID number if not present in URI
-      paramList$id <- -99
+      # null ID if not present in URI
+      paramList$id <- NULL
+      
+      # instantiate submit and nextProb buttons
+      insertUI(selector="#placeholder",
+               where="afterEnd",
+               ui=actionButton("submit", "Submit"))
+      insertUI(selector="#submit",
+               where="afterEnd",
+               ui=actionButton("nextProb", "Next Problem"))
     }
 
     # check for methods parameters in query string
@@ -57,6 +123,9 @@ shinyServer(function(input, output, session) {
     return(problem)
   }
 
+
+  
+  
   # container for reactive problem set
   prob <- reactiveValues()
 
@@ -129,7 +198,21 @@ shinyServer(function(input, output, session) {
       }
     })
     
-    # save the result - change to db solution later
+    # output$progressBar <- renderUI({
+    #   
+    #   if (input$answer == solution) {
+    #     # move counter up if not over 10
+    #     if (paramList$iter + 1 <= 10) {
+    #       paramList$iter <- isolate(paramList$iter) + 1
+    #     }
+    #   } else {
+    #     paramList$iter <- isolate(paramList$iter) - 1
+    #   }
+    #   
+    #   output$progressBar <- renderUI(progressUpdate(value = paramList$iter))
+    # })
+    
+    # save the result
     if (input$answer == solution) {
       writeTest(db=db, user_id=paramList$id, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
     } else {

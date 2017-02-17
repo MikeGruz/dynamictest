@@ -16,11 +16,13 @@ shinyUI(bootstrapPage(
       uiOutput("answer"),
 
       uiOutput("placeholder"),
-      actionButton("submit", "Submit"),
-      actionButton("nextProb", "Next Problem"),
+      uiOutput("idDiv"),
+      #actionButton("submit", "Submit"),
+      #actionButton("nextProb", "Next Problem"),
 
       div(style="height:20px;"),
-      uiOutput("feedback")
+      uiOutput("feedback"),
+      uiOutput("progressBar")
 
     ),
     column(2)

@@ -1,4 +1,4 @@
-ttest = function(){
+ttest.p = function(){
 
   # generate random t-values, degrees of freedom, and pull prob
   tval = round(runif(1, -4, 4))
@@ -24,7 +24,7 @@ ttest = function(){
 
   # return the following
   return(list(
-    "method" = "Basic t-test interpretation",
+    "method" = "Basic t-test p-value interpretation",
     "text" = probText,
     "problem" = probMath,
     "problemDisp" = probMathDisp,
