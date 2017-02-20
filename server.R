@@ -74,11 +74,11 @@ shinyServer(function(input, output, session) {
         
       } else {
         # null id if not true
-        paramList$id <- NULL
+        paramList$id <- NA
       }
     } else {
       # null ID if not present in URI
-      paramList$id <- NULL
+      paramList$id <- NA
       
       # instantiate submit and nextProb buttons
       insertUI(selector="#placeholder",
