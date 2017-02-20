@@ -25,7 +25,7 @@ anova.f = function(){
                     sprintf("If the our F-value (%s) is greater than the critical <i>F</i> %s, 
                             we can <strong>reject the null hypothesis</strong> that the means of the data 
                             are equal.", fval, fcrit),
-                    sprintf("If our F-value (%s) is greater than the critical <i>F</i> %s, 
+                    sprintf("If our F-value (%s) is less than the critical <i>F</i> %s, 
                             we <strong>fail to reject the null 
                             hypothesis</strong> that the means of the data are equal.", fval, fcrit))
   
