@@ -123,9 +123,6 @@ shinyServer(function(input, output, session) {
     return(problem)
   }
 
-
-  
-  
   # container for reactive problem set
   prob <- reactiveValues()
 
@@ -135,6 +132,9 @@ shinyServer(function(input, output, session) {
     # enable submit button and answer input
     shinyjs::enable("submit")
     shinyjs::enable("answer")
+    
+    # disable next button
+    shinyjs::disable("nextProb")
     
     # get problem set
     prob$problem <- genProblem()
@@ -163,6 +163,9 @@ shinyServer(function(input, output, session) {
   # when submit clicked, check answer
   observeEvent(input$submit, {
 
+    # enable next answer button
+    shinyjs::enable("nextProb")
+    
     # disable submit button and answer input
     shinyjs::disable("submit")
     shinyjs::disable("answer")
