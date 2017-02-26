@@ -1,7 +1,7 @@
 corr.p = function(){
   
   # generate random pearson's r value
-  rval = round(runif(1, -1, 1), 3)
+  rval = round(runif(1, -.7, .7), 3)
   df = sample(10:100, size=1, replace=T)
   tval = (rval*sqrt(df))/sqrt(1-rval^2)
   rprob = round((pt(abs(tval), df, lower.tail=FALSE)*2), 4)
@@ -28,7 +28,7 @@ corr.p = function(){
   feedback = ifelse(rprob < .05 & rval > 0,
                     "If the probability (<i>p</i>) is less than .05 and <i>r</i> is positive, we can state that there is a positive and significant relationship between x and y.",
              ifelse(rprob < .05 & rval < 0,
-                    "If the probability (<i>p</i>) is less than .05 and <i>r</i> is positive, we can state that there is a negative and significant relationship between x and y.",
+                    "If the probability (<i>p</i>) is less than .05 and <i>r</i> is negative, we can state that there is a negative and significant relationship between x and y.",
                     "If <i>p</i> is greater than .05, we cannot conclude that there is a relationship between x and y."))
   
   # return the following
