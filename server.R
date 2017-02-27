@@ -140,7 +140,7 @@ shinyServer(function(input, output, session) {
     prob$problem <- genProblem()
 
     # output problem to UI
-    output$problemText <-  renderUI(HTML(prob$problem$text))
+    output$problemText <-  renderUI(h4(HTML(prob$problem$text)))
     output$problem <-  renderUI(p(prob$problem$problemDisp))
     output$answer <-  renderUI(
       switch(prob$problem$input,
