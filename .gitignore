@@ -2,4 +2,4 @@
 .gitignore
 .Rproj.user
 .sqlite
-results.sqlite
+data/results.sqlite
