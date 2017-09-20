@@ -114,6 +114,15 @@ shinyServer(function(input, output, session) {
       # remove file extension from filelist names
       paramList$methods <- sapply(allMethods, function(x) {sub(".R", "", x)})
     }
+    
+    # check for assignment identifier
+    if (!is.null(query[['assign']])) {
+      
+      # assign assignment identifier
+      paramList$assign <- query$assign
+    } else {
+      paramList$assign <- 0
+    }
   })
 
   genProblem <- function() {
@@ -217,9 +226,9 @@ shinyServer(function(input, output, session) {
     
     # save the result
     if (input$answer == solution) {
-      writeTest(db=db, user_id=paramList$id, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+      writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
     } else {
-      writeTest(db=db, user_id=paramList$id, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
+      writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
     }
 
 
