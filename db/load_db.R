@@ -4,6 +4,7 @@ require(DBI)
 
 # instantiate db
 db = dbConnect(SQLite(), dbname="/srv/shiny-server/dynamictest/data/results.sqlite")
+#db = dbConnect(SQLite(), dbname="./data/results.sqlite")
 
 # create table if it doesn't exist
 if (dbExecute(db, "SELECT name FROM sqlite_master WHERE type='table' AND name='results'") == 1) {
@@ -12,6 +13,7 @@ if (dbExecute(db, "SELECT name FROM sqlite_master WHERE type='table' AND name='r
               (id INTEGER PRIMARY KEY, -- Autoincrement
               user_id TEXT,
               date INTEGER,
+              assign INTEGER,
               correct INTEGER,
               method TEXT,
               answer TEXT,
