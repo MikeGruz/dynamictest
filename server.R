@@ -21,11 +21,6 @@ source("db/write_db.R")
 
 shinyServer(function(input, output, session) {
 
-
-  
-  # instantiate progress bar
-  # output$progressBar <- renderUI(progressUpdate(init=TRUE))
-  
   # set up reactive container for URI parameters
   paramList <- reactiveValues()
   
@@ -123,6 +118,25 @@ shinyServer(function(input, output, session) {
     } else {
       paramList$assign <- 0
     }
+    
+    # get number of trials param
+    if (!is.null(query[['trials']])) {
+      # check if numeric
+      if (!is.na(as.numeric(query$trials))) {
+        paramList$trials <- as.numeric(query$trials)
+        
+        paramList$correct <- 0
+        
+        # instantiate counter
+        output$progress <- renderUI(
+          p(
+            paste("0/", paramList$trials, " Correct", sep="")
+            )
+          )
+      }
+    }
+    
+    
   })
 
   genProblem <- function() {
@@ -227,6 +241,18 @@ shinyServer(function(input, output, session) {
     # save the result
     if (input$answer == solution) {
       writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+      
+      # update correct counter
+      paramList$correct <- paramList$correct + 1
+      output$progress <- renderUI(
+        p(
+          paste(paramList$correct,
+                "/",
+                paramList$trials,
+                " Correct", sep = "")
+        )
+      )
+      
     } else {
       writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
     }
