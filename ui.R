@@ -6,7 +6,10 @@ shinyUI(bootstrapPage(
   
 
   fluidRow(
-    column(2),
+    column(1),
+    column(1,
+      uiOutput("progress")
+    ),
     column(8,
       #titlePanel("Statistics Practice"),
       uiOutput("test"),
