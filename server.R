@@ -242,16 +242,18 @@ shinyServer(function(input, output, session) {
     if (input$answer == solution) {
       writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
       
-      # update correct counter
-      paramList$correct <- paramList$correct + 1
-      output$progress <- renderUI(
-        p(
-          paste(paramList$correct,
-                "/",
-                paramList$trials,
-                " Correct", sep = "")
+      # update correct counter, if present
+      if (!is.null(query[['trials']])) {
+        paramList$correct <- paramList$correct + 1
+        output$progress <- renderUI(
+          p(
+            paste(paramList$correct,
+                  "/",
+                  paramList$trials,
+                  " Correct", sep = "")
+          )
         )
-      )
+      }
       
     } else {
       writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=0, method=prob$problem$method, answer=input$answer, solution=solution)
