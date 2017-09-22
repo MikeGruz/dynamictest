@@ -134,7 +134,7 @@ shinyServer(function(input, output, session) {
             )
           )
       } else {
-        paramList$trials <- NA
+        paramList$trials <- -99
       }
     }
     
@@ -231,7 +231,7 @@ shinyServer(function(input, output, session) {
       writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method, answer=input$answer, solution=solution)
       
       # update correct counter, if present
-      if (!is.na(paramList$trials)) {
+      if (paramList$trials != -99) {
         paramList$correct <- paramList$correct + 1
         output$progress <- renderUI(
           p(
