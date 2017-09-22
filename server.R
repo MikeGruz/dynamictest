@@ -133,6 +133,8 @@ shinyServer(function(input, output, session) {
             paste("0/", paramList$trials, " Correct", sep="")
             )
           )
+      } else {
+        paramList$trials <- NA
       }
     }
     
@@ -224,26 +226,12 @@ shinyServer(function(input, output, session) {
       }
     })
     
-    # output$progressBar <- renderUI({
-    #   
-    #   if (input$answer == solution) {
-    #     # move counter up if not over 10
-    #     if (paramList$iter + 1 <= 10) {
-    #       paramList$iter <- isolate(paramList$iter) + 1
-    #     }
-    #   } else {
-    #     paramList$iter <- isolate(paramList$iter) - 1
-    #   }
-    #   
-    #   output$progressBar <- renderUI(progressUpdate(value = paramList$iter))
-    # })
-    
     # save the result
     if (input$answer == solution) {
-      writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method ,answer=input$answer, solution=solution)
+      writeTest(db=db, user_id=paramList$id, assign=paramList$assign, correct=1, method=prob$problem$method, answer=input$answer, solution=solution)
       
       # update correct counter, if present
-      if (!is.null(query[['trials']])) {
+      if (!is.na(paramList$trials)) {
         paramList$correct <- paramList$correct + 1
         output$progress <- renderUI(
           p(
